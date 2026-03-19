@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>ProductM8 Consultant</title>
+    <style>body { font-family: sans-serif; padding: 20px; }</style>
+</head>
+<body>
+    <h1>ProductM8 Consultant</h1>
+    <textarea id="idee" style="width: 100%; height: 100px;"></textarea><br>
+    <button onclick="stuurIdee()">Valideer mijn idee</button>
+    <pre id="resultaat"></pre>
+
+    <script>
+    async function stuurIdee() {
+        const resultaatDiv = document.getElementById('resultaat');
+        const idee = document.getElementById('idee').value;
+        resultaatDiv.innerText = "Consultant aan het denken...";
+        
+        const res = await fetch('https://my-n8n.nl/webhook/product-consultant', {
+            method: 'POST',
+            body: JSON.stringify({idee: idee}),
+            headers: {'Content-Type': 'application/json'}
+        });
+        const data = await res.json();
+        resultaatDiv.innerText = JSON.stringify(data, null, 2);
+    }
+    </script>
+</body>
+</html>
